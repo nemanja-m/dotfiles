@@ -32,9 +32,9 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 let mapleader=" "
 
 " vim-airline settings
-let g:airline_powerline_fonts = 1               " Fancy arrow symbols
-let g:airline_detect_paste = 1                  " Show PASTE if in paste mode
-let g:airline#extensions#tabline#enabled = 1    " Enable airline for tabs
+let g:airline_powerline_fonts = 1
+let g:airline_detect_paste = 1
+let g:airline#extensions#tabline#enabled = 1
 
 " Use deoplete
 let g:deoplete#enable_at_startup = 1
@@ -111,15 +111,15 @@ set showcmd
 syntax on
 syntax enable
 
-set hidden	       	" Allow bacgrounding buffers without writing them
-set nowrap				  " Don't wrap lines
-set tabstop=2				" Tab is two spaces
-set shiftwidth=2	  " Autoindent is two spaces
-set expandtab				" Use spaces instead of tabs
+set hidden
+set nowrap
+set tabstop=2
+set shiftwidth=2
+set expandtab
 
 " Searching
-set ignorecase			" Searches are case insensitive
-set smartcase				" Unless they contain at least one capital letter
+set ignorecase
+set smartcase
 
 " Disable Backup or swap files
 set nobackup
