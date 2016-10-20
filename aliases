@@ -1,0 +1,12 @@
+# General
+alias v="nvim"
+alias zshcfg="nvim ~/.zshrc"
+alias vcfg="nvim ~/.config/nvim/init.vim"
+alias open='xdg-open'
+alias tmux="env TERM=xterm-256color tmux"
+
+# Tree with level 1
+function t() { tree -L ${1:-"1"}; }
+
+# Rails
+alias be="bundle exec"
