@@ -1,0 +1,12 @@
+[user]
+  email = nemanja_milicevic@hotmail.com
+  name = Nemanja Milićević
+
+[github]
+  user = nemanja-m
+
+[push]
+  default = current
+
+[core]
+  editor = vim
