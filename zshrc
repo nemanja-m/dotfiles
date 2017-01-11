@@ -1,21 +1,13 @@
+# Set zsh theme. Set to "random" to load random theme each time
+# oh-my-zsh is loaded
 ZSH_THEME="amuse"
 
-plugins=(git elixir sudo)
+ZSH=$HOME/.oh-my-zsh
 
-export ZSH=$HOME/.oh-my-zsh
+plugins=(git ruby elixir sudo ssh-agent)
+
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 source $ZSH/oh-my-zsh.sh
 source ~/.aliases
-
-# Start tmux on terminal open
-if which tmux >/dev/null 2>&1; then
-  # if no session is started, start a new session
-  test -z ${TMUX} && tmux
-
-  # when quitting tmux, try to attach
-  while test -z ${TMUX}; do
-    tmux attach || break
-  done
-fi
