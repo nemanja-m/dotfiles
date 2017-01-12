@@ -1,6 +1,6 @@
 # Installation
 
-Requirements: `ruby 2.0+`
+Requirements: `git` and `ruby 2.0+`
 
 ``` bash
 git clone https://github.com/nemanja-m/dotfiles.git
