@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+
+set -e
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+RESET='\033[0m'
+
+print() { echo -e "${RED}==>${RESET} ${GREEN}$1${RESET}"; }
+
+here="$(dirname "$0")"
+here="$(cd "$here"; pwd)"
+
+mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+
+print "Installing submodules"
+git submodule init
+git submodule update
+
+print "Download package lists"
+sudo apt-get update -q -y 2>&1 >/dev/null
+
+print "Install basic tools"
+sudo apt-get install -y git make zsh tmux ack-grep tree 2>&1 >/dev/null
+
+print "Install Neovim"
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt-get update
+sudo apt-get install neovim
+
+print "Use Neovim instead of vi and Vim"
+sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
+sudo update-alternatives --config vi
+sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
+sudo update-alternatives --config vim
+sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
+sudo update-alternatives --config editor
+
+if [[ ! -d ~/.oh-my-zsh ]]; then
+  print "Install oh-my-zsh"
+  git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+fi
+
+if [[ $SHELL != "/bin/zsh" ]]; then
+  print "Switch to zsh"
+  chsh -s $(which zsh)
+fi
+
+print "Link dotfiles"
+for file in "$here"/*; do
+name="$(basename "$file" .md)"
+  [[ $name = bin || $name = nvim ]] && dotname="$name" || dotname=".${name}"
+
+  if [[ !( "install README bin nvim" =~ $name || -d $file/.git ) ]]; then
+    ln -sfv ${file#$HOME/} "${HOME}/${dotname}"
+  fi
+done
+
+if [[ ! -d ~/.config/nvim ]]; then
+  print "Install neovimfiles"
+  cp nvim/* ~/.config/nvim
+  gem install neovim
+  nvim +PlugInstall +qall
+fi
