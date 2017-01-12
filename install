@@ -50,9 +50,9 @@ fi
 print "Link dotfiles"
 for file in "$here"/*; do
 name="$(basename "$file" .md)"
-  [[ $name = bin || $name = nvim ]] && dotname="$name" || dotname=".${name}"
+  [[ $name = bin ]] && dotname="$name" || dotname=".${name}"
 
-  if [[ !( "install README bin nvim" =~ $name || -d $file/.git ) ]]; then
+  if [[ !( "install README nvim" =~ $name || -d $file/.git ) ]]; then
     ln -sfv ${file#$HOME/} "${HOME}/${dotname}"
   fi
 done
