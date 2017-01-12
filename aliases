@@ -2,6 +2,7 @@
 alias zshcfg="vim ~/.zshrc"
 alias vcfg="vim ~/.config/nvim/init.vim"
 alias open="xdg-open"
+alias vim="nvim"
 
 # Output current directory files as tree
 # with default depth level 1
