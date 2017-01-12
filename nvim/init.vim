@@ -9,7 +9,6 @@ Plug 'yggdroot/indentline'
 Plug 'airblade/vim-gitgutter'
 Plug 'raimondi/delimitmate'
 Plug 'ervandew/supertab'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'godlygeek/tabular'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'mileszs/ack.vim'
@@ -96,10 +95,6 @@ vmap = =gv
 nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>h :split<CR>
 
-" Use deoplete
-let g:deoplete#enable_at_startup = 1
-let g:deoplete#max_list = 10
-
 " Tabular shortcuts
 nmap <leader>ae :Tabularize /=<CR>
 vmap <leader>ae :Tabularize /=<CR>
@@ -141,6 +136,9 @@ let g:airline_section_x=""
 let g:airline_section_y=""
 let g:airline_section_z="%l/%L %-3.c"
 let g:airline_theme="gruvbox"
+
+" Support true color
+set termguicolors
 
 " Color scheme
 let g:gruvbox_italic=1
