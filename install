@@ -59,7 +59,7 @@ done
 
 if [[ ! -d ~/.config/nvim ]]; then
   print "Install neovimfiles"
-  cp nvim/* ~/.config/nvim
+  cp nvim ~/.config/
   gem install neovim
   nvim +PlugInstall +qall
 fi
