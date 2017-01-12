@@ -44,7 +44,7 @@ fi
 
 if [[ $SHELL != "/bin/zsh" ]]; then
   print "Switch to zsh"
-  sudo chsh -s $(which zsh)
+  chsh -s $(which zsh)
 fi
 
 print "Link dotfiles"
@@ -60,6 +60,6 @@ done
 if [[ ! -d ~/.config/nvim ]]; then
   print "Install neovimfiles"
   cp -a nvim ~/.config/
-  sudo gem install neovim
+  gem install neovim
   nvim +PlugInstall +qall
 fi
