@@ -29,7 +29,6 @@ call plug#end()
 set number
 set numberwidth=4
 set ruler
-set cursorline
 set scrolloff=3
 set laststatus=2
 set showcmd
