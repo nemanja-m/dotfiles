@@ -96,10 +96,12 @@ nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>h :split<CR>
 
 " Tabular shortcuts
-nmap <leader>ae :Tabularize /=<CR>
-vmap <leader>ae :Tabularize /=<CR>
-nmap <leader>ac :Tabularize /:\zs<CR>
-vmap <leader>ac :Tabularize /:\zs<CR>
+nmap <leader>a= :Tabularize /=<CR>
+vmap <leader>a= :Tabularize /=<CR>
+nmap <leader>a: :Tabularize /:\zs<CR>
+vmap <leader>a: :Tabularize /:\zs<CR>
+nmap <leader>a<bar> :Tabularize /<bar><CR>
+vmap <leader>a<bar> :Tabularize /<bar><CR>
 
 " CtrlP
 map <leader>ga :CtrlP app<CR>
