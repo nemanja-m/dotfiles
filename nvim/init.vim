@@ -63,7 +63,7 @@ autocmd BufWritePre * :%s/\s\+$//e
 " Clear the search buffer when hitting return
 :nnoremap <CR> :nohlsearch<cr>
 
-let mapleader=" "
+let mapleader=","
 
 inoremap jj <Esc>
 
