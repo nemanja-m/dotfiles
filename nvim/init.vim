@@ -95,6 +95,9 @@ vmap = =gv
 nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>h :split<CR>
 
+" Delimitmate
+let delimitMate_expand_cr = 1
+
 " Tabular shortcuts
 nmap <leader>a= :Tabularize /=<CR>
 vmap <leader>a= :Tabularize /=<CR>
