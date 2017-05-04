@@ -120,7 +120,7 @@ map <leader>gd :e db/schema.rb<cr>
 map <leader>gr :e config/routes.rb<cr>
 map <leader>gg :e Gemfile<cr>
 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)|deps|_build|vendor$'
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)|deps|_build|vendor|node_modules$'
 
 " Ack
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
