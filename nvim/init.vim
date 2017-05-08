@@ -98,6 +98,9 @@ nnoremap <leader>h :split<CR>
 " Delimitmate
 let delimitMate_expand_cr = 1
 
+" JSX config
+let g:jsx_ext_required = 0
+
 " Tabular shortcuts
 nmap <leader>a= :Tabularize /=<CR>
 vmap <leader>a= :Tabularize /=<CR>
