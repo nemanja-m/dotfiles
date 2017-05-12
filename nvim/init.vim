@@ -2,6 +2,7 @@ call plug#begin('~/.config/nvim/plugged')
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'vim-ruby/vim-ruby'
 Plug 'elixir-lang/vim-elixir'
 Plug 'morhetz/gruvbox'
@@ -61,7 +62,10 @@ set lazyredraw
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Clear the search buffer when hitting return
-:nnoremap <CR> :nohlsearch<cr>
+nnoremap <CR> :nohlsearch<cr>
+
+" Hack nvim to support tmux-navigator
+nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
 
 let mapleader=","
 
@@ -79,12 +83,6 @@ map <Left>  :echo "Use h!"<CR>
 map <Right> :echo "Use l!"<CR>
 map <Up>    :echo "Use k!"<CR>
 map <Down>  :echo "Use j!"<CR>
-
-" Navigation between windows
-nnoremap <M-j> <C-w>j
-nnoremap <M-k> <C-w>k
-nnoremap <M-h> <C-w>h
-nnoremap <M-l> <C-w>l
 
 " Indent selected code without unselecting
 vmap > >gv
