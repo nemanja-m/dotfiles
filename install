@@ -21,7 +21,7 @@ print "Download package lists"
 sudo apt-get update -q -y 2>&1 >/dev/null
 
 print "Install basic tools"
-sudo apt-get install -y git make zsh ack-grep tree 2>&1 >/dev/null
+sudo apt-get install -y git make ack-grep tree 2>&1 >/dev/null
 
 print "Install Neovim"
 sudo apt-get install software-properties-common -y
