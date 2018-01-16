@@ -3,11 +3,10 @@ alias zshcfg="vim ~/.zshrc"
 alias vcfg="vim ~/.config/nvim/init.vim"
 alias open="xdg-open"
 alias vim="nvim"
+alias code="cd ~/code"
+alias bye="sudo poweroff"
+alias python="python3"
 
 # Output current directory files as tree
 # with default depth level 1
 function t() { tree -L ${1:-"1"}; }
-
-# Rails
-alias be="bundle exec"
-alias bi="bundle install"

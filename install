@@ -13,32 +13,50 @@ here="$(cd "$here"; pwd)"
 
 mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
 
-print "Installing submodules"
-git submodule init
-git submodule update
-
-print "Download package lists"
+print "Downloading package lists"
 sudo apt-get update -q -y 2>&1 >/dev/null
 
-print "Install basic tools"
-sudo apt-get install -y git make zsh tmux ack-grep tree 2>&1 >/dev/null
+print "Installing basic tools"
+sudo apt-get install -y git make ack-grep tree 2>&1 >/dev/null
 
-print "Install Neovim"
-sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:neovim-ppa/unstable
+print "Installing build tools"
+sudo apt-get install -y automake build-essential pkg-config 2>&1 >/dev/null
+
+print "Installing tmux"
+sudo apt-get install -y libevent-dev libncurses5-dev 2>&1 >/dev/null
+
+rm -rf /tmp/tmux
+
+git clone https://github.com/tmux/tmux.git /tmp/tmux && cd /tmp/tmux
+
+sh autogen.sh
+./configure && make
+sudo make install
+
+cd -
+rm -rf /tmp/tmux
+
+print "Installing Neovim"
+sudo apt-get install software-properties-common -y
+sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt-get update
-sudo apt-get install neovim
+sudo apt-get install neovim -y
 
 print "Use Neovim instead of vi and Vim"
 sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-sudo update-alternatives --config vi
+sudo update-alternatives --set vi
 sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
-sudo update-alternatives --config vim
+sudo update-alternatives --set vim
 sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
-sudo update-alternatives --config editor
+sudo update-alternatives --set editor
+
+if [[ ! -x "$(command -v zsh)" ]]; then
+  print "Installing zsh"
+  sudo apt-get install zsh -y
+fi
 
 if [[ ! -d ~/.oh-my-zsh ]]; then
-  print "Install oh-my-zsh"
+  print "Installing oh-my-zsh"
   git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
 
@@ -47,9 +65,10 @@ if [[ $SHELL != "/bin/zsh" ]]; then
   sudo chsh -s $(which zsh)
 fi
 
-print "Link dotfiles"
+print "Linking dotfiles"
+
 for file in "$here"/*; do
-name="$(basename "$file" .md)"
+  name="$(basename "$file" .md)"
   [[ $name = bin ]] && dotname="$name" || dotname=".${name}"
 
   if [[ !( "install README nvim" =~ $name || -d $file/.git ) ]]; then
@@ -58,8 +77,10 @@ name="$(basename "$file" .md)"
 done
 
 if [[ ! -d ~/.config/nvim ]]; then
-  print "Install neovimfiles"
+  print "Installing neovimfiles"
   cp -a nvim ~/.config/
-  sudo gem install neovim
+  pip3 install neovim
   nvim +PlugInstall +qall
 fi
+
+print "\nDone!"
