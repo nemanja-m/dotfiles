@@ -13,17 +13,30 @@ here="$(cd "$here"; pwd)"
 
 mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
 
-print "Installing submodules"
-git submodule init
-git submodule update
-
-print "Download package lists"
+print "Downloading package lists"
 sudo apt-get update -q -y 2>&1 >/dev/null
 
-print "Install basic tools"
+print "Installing basic tools"
 sudo apt-get install -y git make ack-grep tree 2>&1 >/dev/null
 
-print "Install Neovim"
+print "Installing build tools"
+sudo apt-get install -y automake build-essential pkg-config 2>&1 >/dev/null
+
+print "Installing tmux"
+sudo apt-get install -y libevent-dev libncurses5-dev 2>&1 >/dev/null
+
+rm -rf /tmp/tmux
+
+git clone https://github.com/tmux/tmux.git /tmp/tmux && cd /tmp/tmux
+
+sh autogen.sh
+./configure && make
+sudo make install
+
+cd -
+rm -rf /tmp/tmux
+
+print "Installing Neovim"
 sudo apt-get install software-properties-common -y
 sudo add-apt-repository ppa:neovim-ppa/unstable -y
 sudo apt-get update
@@ -43,7 +56,7 @@ if [[ ! -x "$(command -v zsh)" ]]; then
 fi
 
 if [[ ! -d ~/.oh-my-zsh ]]; then
-  print "Install oh-my-zsh"
+  print "Installing oh-my-zsh"
   git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
 fi
 
@@ -52,7 +65,7 @@ if [[ $SHELL != "/bin/zsh" ]]; then
   sudo chsh -s $(which zsh)
 fi
 
-print "Link dotfiles"
+print "Linking dotfiles"
 
 for file in "$here"/*; do
   name="$(basename "$file" .md)"
@@ -64,8 +77,10 @@ for file in "$here"/*; do
 done
 
 if [[ ! -d ~/.config/nvim ]]; then
-  print "Install neovimfiles"
+  print "Installing neovimfiles"
   cp -a nvim ~/.config/
   pip3 install neovim
   nvim +PlugInstall +qall
 fi
+
+print "\nDone!"
