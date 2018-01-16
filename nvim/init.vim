@@ -1,75 +1,36 @@
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-ruby/vim-ruby'
-Plug 'elixir-lang/vim-elixir'
-Plug 'morhetz/gruvbox'
-Plug 'yggdroot/indentline'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'airblade/vim-gitgutter'
-Plug 'raimondi/delimitmate'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'mileszs/ack.vim'
 Plug 'pangloss/vim-javascript'
-Plug 'kchmck/vim-coffee-script'
-Plug 'mxw/vim-jsx'
 Plug 'isRuslan/vim-es6'
+Plug 'mxw/vim-jsx'
+Plug 'mileszs/ack.vim'
+Plug 'morhetz/gruvbox'
+Plug 'raimondi/delimitMate'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
-Plug 'skywind3000/asyncrun.vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'christoomey/vim-tmux-navigator'
+Plug 'yggdroot/indentline'
+Plug 'zchee/deoplete-jedi'
 
 call plug#end()
 
-" Delimitmate
-let delimitMate_expand_cr = 1
+let mapleader = ','
 
-" Enable JSX highlighting in js files
-let g:jsx_ext_required = 0
+" Set new vorizontal and vertical positions
+set splitright
+set splitbelow
 
-" ALE
-let g:ale_sign_error = '●'
-let g:ale_sign_warning = '.'
-let g:ale_lint_on_enter = 0
-let g:ale_linters = { 'javascript': ['eslint'] }
-
-" Run JS prettier on save
-autocmd BufWritePost *.js AsyncRun -post=edit eslint --fix %
-
-" Tabular shortcuts
-nmap <leader>a= :Tabularize /=<CR>
-vmap <leader>a= :Tabularize /=<CR>
-nmap <leader>a: :Tabularize /:\zs<CR>
-vmap <leader>a: :Tabularize /:\zs<CR>
-nmap <leader>a<bar> :Tabularize /<bar><CR>
-vmap <leader>a<bar> :Tabularize /<bar><CR>
-
-" CtrlP
-map <leader>f :CtrlP ./<CR>
-map <leader>b :CtrlPBuffer<CR>
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)|deps|_build|vendor|node_modules$'
-
-" Ack
-let g:ackprg='ack-grep -H --nocolor --nogroup --column'
-nmap <leader>a :Ack ""<Left>
-nmap <leader>A :Ack <C-r><C-w>
-
-" vig-gitgutter
-hi clear SignColumn
-let g:airline#extensions#hunks#non_zero_only = 1
-
-" Airline
-" let g:airline_section_b = '%-0.10{getcwd()}'
-let g:airline_section_z='%l/%L %-3.c'
-let g:airline_powerline_fonts = 1
-let g:airline_theme='deus'
+" Don't show preview window on autocompletion
+set completeopt-=preview
 
 set number
 set numberwidth=4
@@ -99,17 +60,76 @@ set autoindent
 set cindent
 set smartindent
 
+" Support true color
+set termguicolors
+
+filetype plugin indent on
+syntax on
+
+" Start autocompletion
+let g:deoplete#enable_at_startup = 1
+
+" Enable JSX highlighting in js files
+let g:jsx_ext_required = 0
+
+" Delimitmate
+let g:delimitMate_expand_cr = 1
+
+" ALE
+let g:ale_sign_error = '●'
+let g:ale_sign_warning = '.'
+let g:ale_lint_on_enter = 0
+let g:ale_fix_on_save = 1
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\   'python': ['flake8']
+\}
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\   'python': ['autopep8']
+\}
+
+" vig-gitgutter
+hi clear SignColumn
+let g:airline#extensions#hunks#non_zero_only = 1
+
+" Airline
+let g:airline_section_z='%l/%L %-3.c'
+let g:airline_powerline_fonts = 1
+let g:airline_theme='gruvbox'
+
+" Tabular shortcuts
+nmap <leader>a= :Tabularize /=<CR>
+vmap <leader>a= :Tabularize /=<CR>
+nmap <leader>a: :Tabularize /:\zs<CR>
+vmap <leader>a: :Tabularize /:\zs<CR>
+nmap <leader>a<bar> :Tabularize /<bar><CR>
+vmap <leader>a<bar> :Tabularize /<bar><CR>
+
+" CtrlP
+map <leader>f :CtrlP ./<CR>
+map <leader>b :CtrlPBuffer<CR>
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)|deps|_build|vendor|node_modules$'
+
+" Ack
+let g:ackprg='ack-grep -H --nocolor --nogroup --column'
+nmap <leader>a :Ack ""<Left>
+nmap <leader>A :Ack <C-r><C-w>
+
 " Delete empty space from the end of lines on every write
 autocmd BufWritePre * :%s/\s\+$//e
 
 " Clear the search buffer when hitting return
 nnoremap <CR> :nohlsearch<cr>
 
-let mapleader=","
+" Paste from clipboard and fix indentation
+nmap <leader>p "+pV`]=<ESC>
+nmap <leader>P "+PV`]=<ESC>
 
-" Paste lines from unnamed register and fix indentation
-nmap <leader>p pV`]=
-nmap <leader>P PV`]=
+" Copy to clipboard
+vnoremap <leader>y "+y
+nnoremap <leader>y "+y
+nnoremap <leader>yy "+yy
 
 " Disable cursor keys in normal mode
 map <Left>  :echo "Use h!"<CR>
@@ -126,15 +146,8 @@ vmap = =gv
 nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>h :split<CR>
 
-" Support true color
-set termguicolors
-
-syntax on
-syntax enable
-
 " Color scheme
 let g:gruvbox_italic=1
 let g:gruvbox_italicize_comments=1
-
 set background=dark
 colorscheme gruvbox
