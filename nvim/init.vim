@@ -11,14 +11,15 @@ Plug 'isRuslan/vim-es6'
 Plug 'mxw/vim-jsx'
 Plug 'mileszs/ack.vim'
 Plug 'morhetz/gruvbox'
-Plug 'raimondi/delimitMate'
+Plug 'python-mode/python-mode'
+Plug 'Raimondi/delimitMate'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'w0rp/ale'
-Plug 'yggdroot/indentline'
+Plug 'yggdroot/indentLine'
 Plug 'zchee/deoplete-jedi'
 
 call plug#end()
@@ -88,6 +89,20 @@ let g:ale_fixers = {
 \   'javascript': ['eslint'],
 \   'python': ['autopep8']
 \}
+
+" python-mode
+let g:pymode_python = 'python3'
+let g:pymode_options_colorcolumn = 0
+let g:pymode_indent = 0
+let g:pymode_folding = 0
+let g:pymode_syntax_indent_errors = 0
+let g:pymode_syntax_space_errors = 0
+
+" Turn off code checking
+let g:pymode_lint = 0
+let g:pymode_lint_on_write = 0
+
+autocmd BufEnter __run__,__doc__ :wincmd L
 
 " vig-gitgutter
 hi clear SignColumn
