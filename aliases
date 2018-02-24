@@ -5,7 +5,6 @@ alias open="xdg-open"
 alias vim="nvim"
 alias code="cd ~/code"
 alias bye="sudo poweroff"
-alias python="python3"
 
 # Output current directory files as tree
 # with default depth level 1
