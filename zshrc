@@ -10,6 +10,7 @@ plugins=(
   ssh-agent
   tmux
   virtualenvwrapper
+  zsh-syntax-highlighting
 )
 
 ZSH_TMUX_AUTOSTART=true

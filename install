@@ -79,6 +79,7 @@ fi
 if [[ ! -d ~/.oh-my-zsh ]]; then
   print "Installing oh-my-zsh"
   git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 fi
 
 print "Linking dotfiles"
