@@ -6,25 +6,41 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 RESET='\033[0m'
 
-print() { echo -e "${RED}==>${RESET} ${GREEN}$1${RESET}"; }
+print() { echo -e "${RED}--${RESET} ${GREEN}$1${RESET}"; }
 
 here="$(dirname "$0")"
 here="$(cd "$here"; pwd)"
 
 mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+mkdir $HOME/code
+
+print "\nStarting dotfiles install..."
 
 print "Downloading package lists"
 sudo apt-get update -q -y 2>&1 >/dev/null
 
 print "Installing basic tools"
-sudo apt-get install -y git make ack-grep tree 2>&1 >/dev/null
+sudo apt-get install -y git make ack-grep tree xclip cmatrix htop 2>&1 >/dev/null
 
 print "Installing build tools"
 sudo apt-get install -y automake build-essential pkg-config 2>&1 >/dev/null
 
+print "Installing power management tools"
+sudo apt-get install tlp tlp-rdw -y 2>&1 >/dev/null
+sudo tlp start
+
+print "Installing python headers and pip"
+sudo apt-get install python-dev python3-dev -y 2>&1 >/dev/null
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+sudo python get-pip.py
+sudo python3 get-pip.py
+rm get-pip.py
+
+print "Installing basic python packages"
+sudo pip3 install virtualenvwrapper ipython ipdb
+
 print "Installing tmux"
 sudo apt-get install -y libevent-dev libncurses5-dev 2>&1 >/dev/null
-
 rm -rf /tmp/tmux
 
 git clone https://github.com/tmux/tmux.git /tmp/tmux && cd /tmp/tmux
@@ -33,36 +49,36 @@ sh autogen.sh
 ./configure && make
 sudo make install
 
-cd -
-rm -rf /tmp/tmux
+cd - && rm -rf /tmp/tmux
 
-print "Installing Neovim"
+print "Installing neovim"
 sudo apt-get install software-properties-common -y
-sudo add-apt-repository ppa:neovim-ppa/unstable -y
+sudo add-apt-repository ppa:neovim-ppa/stable -y
 sudo apt-get update
 sudo apt-get install neovim -y
+sudo pip3 install neovim
 
-print "Use Neovim instead of vi and Vim"
+print "Setting neovim as default editor"
 sudo update-alternatives --install /usr/bin/vi vi /usr/bin/nvim 60
-sudo update-alternatives --set vi
+sudo update-alternatives --set vi /usr/bin/nvim
 sudo update-alternatives --install /usr/bin/vim vim /usr/bin/nvim 60
-sudo update-alternatives --set vim
+sudo update-alternatives --set vim /usr/bin/nvim
 sudo update-alternatives --install /usr/bin/editor editor /usr/bin/nvim 60
-sudo update-alternatives --set editor
+sudo update-alternatives --set editor /usr/bin/nvim
 
 if [[ ! -x "$(command -v zsh)" ]]; then
   print "Installing zsh"
   sudo apt-get install zsh -y
 fi
 
+if [[ $SHELL != "/bin/zsh" ]]; then
+  print "Making zsh default shell"
+  sudo chsh -s $(which zsh) $USER
+fi
+
 if [[ ! -d ~/.oh-my-zsh ]]; then
   print "Installing oh-my-zsh"
   git clone git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh
-fi
-
-if [[ $SHELL != "/bin/zsh" ]]; then
-  print "Switch to zsh"
-  sudo chsh -s $(which zsh)
 fi
 
 print "Linking dotfiles"
@@ -77,10 +93,10 @@ for file in "$here"/*; do
 done
 
 if [[ ! -d ~/.config/nvim ]]; then
-  print "Installing neovimfiles"
+  print "Installing neovim plugins"
   cp -a nvim ~/.config/
-  pip3 install neovim
   nvim +PlugInstall +qall
 fi
 
 print "\nDone!"
+print "Restart computer for these changes to take effect"
