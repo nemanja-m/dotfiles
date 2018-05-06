@@ -90,6 +90,9 @@ let g:ale_fixers = {
 \   'python': ['autopep8']
 \}
 
+let g:python_host_prog='/usr/bin/python'
+let g:python3_host_prog='/usr/bin/python3'
+
 " python-mode
 let g:pymode_python = 'python3'
 let g:pymode_options_colorcolumn = 0
@@ -97,6 +100,15 @@ let g:pymode_indent = 0
 let g:pymode_folding = 0
 let g:pymode_syntax_indent_errors = 0
 let g:pymode_syntax_space_errors = 0
+
+" Find definition
+let g:pymode_rope_goto_definition_bind = '<leader>fd'
+let g:pymode_rope_goto_definition_cmd = 'vnew'
+
+" Refactoring
+let g:pymode_rope_rename_bind = '<leader>rr'
+let g:pymode_rope_rename_module_bind = '<leader>r1r'
+let g:pymode_rope_organize_imports_bind = '<leader>ro'
 
 " Turn off code checking
 let g:pymode_lint = 0
@@ -162,7 +174,11 @@ nnoremap <leader>v :vsplit<CR>
 nnoremap <leader>h :split<CR>
 
 " Color scheme
-let g:gruvbox_italic=1
-let g:gruvbox_italicize_comments=1
-set background=dark
-colorscheme gruvbox
+try
+  let g:gruvbox_italic=1
+  let g:gruvbox_italicize_comments=1
+  set background=dark
+  colorscheme gruvbox
+catch
+  " nop
+endtry
