@@ -95,6 +95,7 @@ let g:python3_host_prog='/usr/bin/python3'
 
 " python-mode
 let g:pymode_python = 'python3'
+let g:pymode_breakpoint_cmd = 'ipdb'
 let g:pymode_options_colorcolumn = 0
 let g:pymode_indent = 0
 let g:pymode_folding = 0
@@ -106,6 +107,7 @@ let g:pymode_rope_goto_definition_bind = '<leader>fd'
 let g:pymode_rope_goto_definition_cmd = 'vnew'
 
 " Refactoring
+let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_rename_bind = '<leader>rr'
 let g:pymode_rope_rename_module_bind = '<leader>r1r'
 let g:pymode_rope_organize_imports_bind = '<leader>ro'
@@ -115,6 +117,7 @@ let g:pymode_lint = 0
 let g:pymode_lint_on_write = 0
 
 autocmd BufEnter __run__,__doc__ :wincmd L
+autocmd FileType make setlocal noexpandtab
 
 " vig-gitgutter
 hi clear SignColumn
