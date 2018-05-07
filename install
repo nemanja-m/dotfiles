@@ -99,8 +99,14 @@ if [[ ! -d ~/.config/nvim ]]; then
 fi
 
 print "Creating projects directory"
-mkdir $HOME/code
-echo '#compdef code\n\n_arguments "1: :(`ls ~/code`)"' > $HOME/.oh-my-zsh/completions/_code
+
+PROJECTS_DIR="$HOME/code"
+COMPLETIONS_DIR="$HOME/.oh-my-zsh/completions/"
+
+mkdir -p $PROJECTS_DIR
+mkdir -p $COMPLETIONS_DIR
+
+echo -e '#compdef code\n\n_arguments "1: :(`ls ~/code`)"' > "$COMPLETIONS_DIR/_code"
 
 print "\nDone!"
 print "Restart computer for these changes to take effect"
