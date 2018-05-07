@@ -1,5 +1,3 @@
-# Set zsh theme. Set to "random" to load random theme each time
-# oh-my-zsh is loaded
 ZSH_THEME="amuse"
 
 ZSH=$HOME/.oh-my-zsh
@@ -7,8 +5,8 @@ ZSH=$HOME/.oh-my-zsh
 plugins=(
   git
   sudo
-  ssh-agent
   tmux
+  ssh-agent
   virtualenvwrapper
   zsh-syntax-highlighting
 )

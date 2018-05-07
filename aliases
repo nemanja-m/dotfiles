@@ -3,9 +3,9 @@ alias zshcfg="vim ~/.zshrc"
 alias vcfg="vim ~/.config/nvim/init.vim"
 alias open="xdg-open"
 alias vim="nvim"
-alias code="cd ~/code"
 alias bye="sudo poweroff"
 alias ipy="ipython3"
+alias py="python3"
 
 # Output current directory files as tree
 # with default depth level 1
@@ -15,8 +15,12 @@ function t() {
 
 # Start Matrix like screensaver
 function scrs() {
-  tmux set -g status off
-  cmatrix -b -C ${1:-"green"}
-  tmux set -g status on
+  tmux set status off
+  cmatrix -bfs -C ${1:-"red"};
+  tmux set status on
   clear
+}
+
+function code() {
+  cd ~/code/${1:-""}
 }
