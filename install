@@ -82,14 +82,14 @@ if [[ ! -d ~/.oh-my-zsh ]]; then
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 fi
 
-print "Linking dotfiles"
+print "Copying dotfiles"
 
 for file in "$here"/*; do
   name="$(basename "$file" .md)"
   [[ $name = bin ]] && dotname="$name" || dotname=".${name}"
 
   if [[ !( "install README nvim" =~ $name || -d $file/.git ) ]]; then
-    ln -sfv ${file#$HOME/} "${HOME}/${dotname}"
+    cp -a ${file} "${HOME}/${dotname}"
   fi
 done
 
